@@ -146,8 +146,8 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
+  height: 5px;
+  width: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -157,6 +157,16 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
+}
+
+/* Hide scrollbar utility for smooth mobile swiping */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Keyframes for subtle background orbs float */
@@ -185,4 +195,9 @@ body {
 
 .pulse-glow {
   animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* Mobile tap touch feedback optimization */
+* {
+  -webkit-tap-highlight-color: transparent;
 }

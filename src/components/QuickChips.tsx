@@ -26,10 +26,10 @@ export const QuickChips: React.FC<QuickChipsProps> = ({
   favorites,
 }) => {
   return (
-    <div className="flex items-center gap-2 overflow-x-auto py-1 custom-scrollbar">
-      <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 shrink-0 mr-1">
-        <MapPin className="w-3.5 h-3.5 text-sky-400" />
-        <span>Quick / Saved:</span>
+    <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-1 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+      <div className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold text-slate-400 shrink-0 mr-0.5">
+        <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+        <span className="hidden xs:inline">Quick:</span>
       </div>
 
       {/* Favorites if any */}
@@ -39,13 +39,13 @@ export const QuickChips: React.FC<QuickChipsProps> = ({
           <button
             key={`fav-${city.id}-${city.name}`}
             onClick={() => onSelectCity(city)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all ${
+            className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium shrink-0 flex items-center gap-1.5 active:scale-95 transition-all ${
               isActive
                 ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm'
-                : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 hover:border-amber-400/40'
+                : 'bg-white/5 hover:bg-white/10 active:bg-white/15 text-slate-300 border border-white/10 hover:border-amber-400/40'
             }`}
           >
-            <Bookmark className="w-3 h-3 fill-amber-400 text-amber-400" />
+            <Bookmark className="w-3 h-3 fill-amber-400 text-amber-400 shrink-0" />
             <span>{city.name}</span>
           </button>
         );
@@ -58,10 +58,10 @@ export const QuickChips: React.FC<QuickChipsProps> = ({
           <button
             key={`pop-${city.id}-${city.name}`}
             onClick={() => onSelectCity(city)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium shrink-0 flex items-center gap-1 transition-all ${
+            className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium shrink-0 flex items-center gap-1 active:scale-95 transition-all ${
               isActive
                 ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-sm'
-                : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 hover:border-sky-400/40'
+                : 'bg-white/5 hover:bg-white/10 active:bg-white/15 text-slate-300 border border-white/10 hover:border-sky-400/40'
             }`}
           >
             <span>{city.name}</span>

@@ -143,7 +143,7 @@ export default function Home() {
       {/* Adaptive Weather Background */}
       <DynamicBackground theme={currentTheme} />
 
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6 flex-1">
+      <div className="max-w-7xl w-full mx-auto px-3.5 sm:px-6 lg:px-8 py-3 sm:py-6 flex flex-col gap-4 sm:gap-6 flex-1">
         {/* Navigation / Header */}
         <Navbar
           onSelectLocation={(loc) => setCurrentLocation(loc)}
@@ -162,14 +162,14 @@ export default function Home() {
 
         {/* Error Notification */}
         {error && (
-          <div className="flex items-center justify-between p-4 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-200 text-sm">
-            <div className="flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
+          <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-200 text-xs sm:text-sm">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-rose-400 shrink-0" />
               <span>{error}</span>
             </div>
             <button
               onClick={() => fetchWeather(currentLocation)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 font-semibold text-xs transition-colors"
+              className="flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-rose-500/20 hover:bg-rose-500/30 font-semibold text-xs transition-colors shrink-0"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Retry</span>
@@ -179,17 +179,17 @@ export default function Home() {
 
         {/* Loading Overlay State */}
         {isLoading && !weatherData ? (
-          <div className="flex-1 flex flex-col items-center justify-center py-24 gap-4">
+          <div className="flex-1 flex flex-col items-center justify-center py-20 sm:py-24 gap-4">
             <div className="relative">
-              <div className="w-16 h-16 rounded-full border-4 border-sky-400/20 border-t-sky-400 animate-spin" />
-              <Loader2 className="w-8 h-8 text-sky-400 absolute inset-0 m-auto animate-pulse" />
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-4 border-sky-400/20 border-t-sky-400 animate-spin" />
+              <Loader2 className="w-7 h-7 sm:w-8 sm:h-8 text-sky-400 absolute inset-0 m-auto animate-pulse" />
             </div>
-            <p className="text-sm font-semibold text-slate-300">Fetching live atmospheric data for {currentLocation.name}...</p>
+            <p className="text-xs sm:text-sm font-semibold text-slate-300">Fetching live atmospheric data for {currentLocation.name}...</p>
           </div>
         ) : weatherData ? (
-          <main className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-fade-in">
+          <main className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start animate-fade-in">
             {/* Left Main Column (8 cols on lg) */}
-            <div className="lg:col-span-8 flex flex-col gap-6">
+            <div className="lg:col-span-8 flex flex-col gap-4 sm:gap-6">
               {/* Hero Weather Card */}
               <HeroWeatherCard
                 location={weatherData.location}
@@ -213,7 +213,7 @@ export default function Home() {
             </div>
 
             {/* Right Sidebar Column (4 cols on lg) */}
-            <div className="lg:col-span-4 flex flex-col gap-6">
+            <div className="lg:col-span-4 flex flex-col gap-4 sm:gap-6">
               {/* 7-Day Forecast Card */}
               <DailyForecast daily={weatherData.daily} unit={unit} />
 
