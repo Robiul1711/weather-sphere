@@ -129,14 +129,15 @@ export async function getWeatherData(location: GeoLocation): Promise<CompleteWea
   const hourlyRaw = weatherData.hourly;
   const dailyRaw = weatherData.daily;
 
-  // Find index of current hour in hourly forecast
-  const now = new Date();
-  const currentHourISO = now.toISOString().slice(0, 13);
+  // Find index of current hour in hourly forecast using location's local current time string
+  const currentHourPrefix = (cur?.time || '').slice(0, 13);
   let startHourIdx = 0;
 
-  if (hourlyRaw && hourlyRaw.time) {
-    const foundIdx = hourlyRaw.time.findIndex((t: string) => t.startsWith(currentHourISO));
-    if (foundIdx !== -1) startHourIdx = foundIdx;
+  if (hourlyRaw && hourlyRaw.time && currentHourPrefix) {
+    const foundIdx = hourlyRaw.time.findIndex((t: string) => t.startsWith(currentHourPrefix));
+    if (foundIdx !== -1) {
+      startHourIdx = foundIdx;
+    }
   }
 
   // Get current UV index, visibility, and dew point from hourly array at current index
@@ -167,18 +168,19 @@ export async function getWeatherData(location: GeoLocation): Promise<CompleteWea
     for (let i = startHourIdx; i < Math.min(startHourIdx + 24, hourlyRaw.time.length); i++) {
       const timeStr = hourlyRaw.time[i];
       const d = new Date(timeStr);
-      const formattedTime = i === startHourIdx ? 'Now' : d.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
+      const isNow = i === startHourIdx;
+      const formattedTime = isNow ? 'Now' : d.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
 
       hourly.push({
         time: timeStr,
         timestamp: d.getTime(),
         formattedTime,
-        temperature: hourlyRaw.temperature_2m[i],
-        apparentTemperature: hourlyRaw.apparent_temperature[i],
-        weatherCode: hourlyRaw.weather_code[i],
-        isDay: hourlyRaw.is_day ? hourlyRaw.is_day[i] === 1 : true,
+        temperature: isNow ? cur.temperature_2m : hourlyRaw.temperature_2m[i],
+        apparentTemperature: isNow ? cur.apparent_temperature : hourlyRaw.apparent_temperature[i],
+        weatherCode: isNow ? cur.weather_code : hourlyRaw.weather_code[i],
+        isDay: isNow ? cur.is_day === 1 : (hourlyRaw.is_day ? hourlyRaw.is_day[i] === 1 : true),
         precipitationProbability: hourlyRaw.precipitation_probability ? hourlyRaw.precipitation_probability[i] ?? 0 : 0,
-        windSpeed: hourlyRaw.wind_speed_10m ? hourlyRaw.wind_speed_10m[i] : 0,
+        windSpeed: isNow ? cur.wind_speed_10m : (hourlyRaw.wind_speed_10m ? hourlyRaw.wind_speed_10m[i] : 0),
       });
     }
   }
